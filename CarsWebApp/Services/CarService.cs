@@ -31,6 +31,7 @@ namespace CarsWebApp.Services
         public async Task<CarDTO> CreateCar(CarCreateDTO carCreateDTO)
         {
             var carEntity = _mapper.Map<Car>(carCreateDTO);
+            _context.Cars.Add(carEntity);
             await _context.SaveChangesAsync();
             var createdCar = await _context.Cars.FirstAsync(p => p.Id == carEntity.Id);
             return _mapper.Map<CarDTO>(createdCar);

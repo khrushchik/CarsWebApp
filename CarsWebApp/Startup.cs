@@ -40,6 +40,8 @@ namespace CarsWebApp
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new ProducerProfile());
+                mc.AddProfile(new CarProfile());
+                mc.AddProfile(new DealerProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
