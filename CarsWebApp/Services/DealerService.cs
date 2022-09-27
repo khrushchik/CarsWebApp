@@ -2,6 +2,7 @@
 using CarsWebApp.DTOs;
 using CarsWebApp.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,9 +52,11 @@ namespace CarsWebApp.Services
         }
         public async Task EditDealer(DealerDTO dto)
         {
-            var dealerEntity = await _context.Dealers.Include(d=>d.Cars).FirstOrDefaultAsync(i=>i.Id == dto.Id);
+            var dealerEntity = await _context.Dealers.FirstOrDefaultAsync(i=>i.Id == dto.Id);
             if (dealerEntity == null)
-                throw new KeyNotFoundException("Dealer is`t found");
+               throw new KeyNotFoundException("Dealer is`t found");
+/*          var dealer = _mapper.Map<Dealer>(dto);
+            _context.Entry(dealer).State = EntityState.Modified;*/
             dealerEntity.Name = dto.Name;
             dealerEntity.Address = dto.Address;
             dealerEntity.ProducerId = dto.ProducerId;
