@@ -73,5 +73,21 @@ namespace CarsWebApp.Services
             await _context.SaveChangesAsync();
 
         }
+
+        public async Task PatchProducer(ProducerDTO producerDTO)
+        {
+            var producerEntity = await _context.Producers.FirstOrDefaultAsync(i=>i.Id == producerDTO.Id);
+            if (producerEntity == null)
+                throw new KeyNotFoundException("Producer is`t found");
+            if (producerDTO.Label != null)
+                producerEntity.Label = producerDTO.Label;
+            if(producerDTO.Info!= null)
+                producerEntity.Info= producerDTO.Info;
+            if (producerEntity.Name != null)
+                producerEntity.Name = producerDTO.Name;
+            _context.Producers.Update(producerEntity);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }

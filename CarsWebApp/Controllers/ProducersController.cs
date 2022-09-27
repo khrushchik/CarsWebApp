@@ -59,5 +59,12 @@ namespace CarsWebApp.Controllers
             await _producerService.EditProducer(dto);
             return NoContent();
         }
+
+        [HttpPatch]
+        public async Task<ActionResult<ProducerDTO>> PatchProducer([FromBody] ProducerDTO dto)
+        {
+            await _producerService.PatchProducer(dto);
+            return NoContent();
+        }
     }
 }
