@@ -39,15 +39,24 @@ namespace CarsWebApp.Controllers
             }
             return Ok(producer);
         }
+
         [HttpPost]
         public async Task<ActionResult<ProducerDTO>> CreateProducer([FromBody] ProducerCreateDTO dto)
         {
             return Ok(await _producerService.CreateProducer(dto));
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducer(int id)
         {
             await _producerService.DeleteProducer(id);
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ProducerDTO>> EditProducer([FromBody] ProducerDTO dto)
+        {
+            await _producerService.EditProducer(dto);
             return NoContent();
         }
     }
