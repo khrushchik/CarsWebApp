@@ -44,11 +44,11 @@ namespace CarsWebApp.Services
         public async Task<ProducerDTO> DeleteProducer(int id)
         {
             var producer = await _context.Producers.FindAsync(id);
-            IQueryable<Dealer> dealers = from db in _context.Dealers where db.Id == id select db;
+            IQueryable<Dealer> dealers = from db in _context.Dealers where db.ProducerId == id select db;
             foreach (Dealer dealer in dealers)
             {
                 var dealerId = dealer.Id;
-                IQueryable<Car> cars = from db in _context.Cars where db.Id == dealerId select db;
+                IQueryable<Car> cars = from db in _context.Cars where db.DealerId == dealerId select db;
                 foreach (Car car in cars)
                 {
                     _context.Cars.Remove(car);
