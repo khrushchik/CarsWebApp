@@ -53,8 +53,34 @@ namespace CarsWebApp.Services
             carEntity.Transmission = dto.Transmission;
             carEntity.Body = dto.Transmission;
             carEntity.Color = dto.Color;
-            carEntity.DealerId = dto.DealerId;
-            carEntity.Year = dto.Year;
+            carEntity.DealerId = (int)dto.DealerId;
+            carEntity.Year = (int)dto.Year;
+            _context.Cars.Update(carEntity);
+            await _context.SaveChangesAsync();
+        }
+        public async Task PatchCar(CarDTO dto)
+        {
+            var carEntity = await _context.Cars.FirstOrDefaultAsync(i => i.Id == dto.Id);
+            if (carEntity == null)
+                throw new KeyNotFoundException("Car is`t found");
+
+            //how to replace it
+            if (dto.Info != null)
+                carEntity.Info = dto.Info;
+            if (dto.Photo != null)
+                carEntity.Photo = dto.Photo;
+            if (dto.Body != null)
+                carEntity.Body = dto.Body;
+            if (dto.Color != null)
+                carEntity.Color = dto.Color;
+            if (dto.Name != null)
+                carEntity.Name = dto.Name;
+            if (dto.Transmission != null)
+                carEntity.Transmission = dto.Transmission;
+            if(dto.Year!=null)
+                carEntity.Year=(int)dto.Year;
+            if(dto.DealerId!=null)
+                carEntity.DealerId=(int)dto.DealerId;
             _context.Cars.Update(carEntity);
             await _context.SaveChangesAsync();
         }

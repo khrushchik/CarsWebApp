@@ -59,12 +59,30 @@ namespace CarsWebApp.Services
             _context.Entry(dealer).State = EntityState.Modified;*/
             dealerEntity.Name = dto.Name;
             dealerEntity.Address = dto.Address;
-            dealerEntity.ProducerId = dto.ProducerId;
+            dealerEntity.ProducerId = (int)dto.ProducerId;
             dealerEntity.Info = dto.Info;
             dealerEntity.Icon = dto.Icon;
             _context.Dealers.Update(dealerEntity);
             await _context.SaveChangesAsync();
 
+        }
+        public async Task PatchDealer(DealerDTO dto)
+        {
+            var dealerEntity = await _context.Dealers.FirstOrDefaultAsync(i => i.Id == dto.Id);
+            if (dealerEntity == null)
+                throw new KeyNotFoundException("Dealer is`t found");
+            if (dto.Address != null)
+                dealerEntity.Address = dto.Address;
+            if (dto.Icon != null)
+                dealerEntity.Icon = dto.Icon;
+            if (dto.Info != null)
+                dealerEntity.Info = dto.Info;
+            if(dto.Name!=null)
+                dealerEntity.Name=dto.Name;
+            if(dto.ProducerId!=null)
+                dealerEntity.ProducerId=(int)dto.ProducerId;
+            _context.Dealers.Update(dealerEntity);
+            await _context.SaveChangesAsync();
         }
     }
 }

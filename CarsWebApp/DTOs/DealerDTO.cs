@@ -8,7 +8,7 @@ namespace CarsWebApp.DTOs
         public string Name { get; set; }
         public string Address { get; set; }
         public string Info { get; set; }
-        public int ProducerId { get; set; }
+        public int? ProducerId { get; set; }
 
         public string Icon { get; set; }
 

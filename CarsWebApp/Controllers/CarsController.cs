@@ -47,10 +47,18 @@ namespace CarsWebApp.Controllers
                 return NotFound();
             return NoContent();
         }
+
         [HttpPut]
         public async Task<ActionResult<CarDTO>> EditCar([FromBody] CarDTO dto)
         {
             await _carService.EditCar(dto);
+            return NoContent();
+        }
+
+        [HttpPatch]
+        public async Task<ActionResult<CarDTO>> PatchCar([FromBody] CarDTO dto)
+        {
+            await _carService.PatchCar(dto);
             return NoContent();
         }
     }
