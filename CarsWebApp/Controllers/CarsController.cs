@@ -48,10 +48,10 @@ namespace CarsWebApp.Controllers
             return NoContent();
         }
 
-        [HttpPut]
-        public async Task<ActionResult<CarDTO>> EditCar([FromBody] CarDTO dto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<CarDTO>> EditCar(int id, [FromBody] CarDTO dto)
         {
-            await _carService.EditCar(dto);
+            await _carService.EditCar(id, dto);
             return NoContent();
         }
 

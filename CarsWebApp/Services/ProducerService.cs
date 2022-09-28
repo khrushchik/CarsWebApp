@@ -60,16 +60,12 @@ namespace CarsWebApp.Services
             return _mapper.Map<ProducerDTO>(producer);
         }
 
-        public async Task EditProducer(ProducerDTO producerDTO)
+        public async Task EditProducer(int id, ProducerDTO producerDTO)
         {
-            var producerEntity = await _context.Producers.Include(p=>p.Dealers).ThenInclude(d=>d.Cars).FirstOrDefaultAsync(p => p.Id == producerDTO.Id);
-            if (producerEntity == null)
+            if(id!=producerDTO.Id)
                 throw new KeyNotFoundException("Producer is`t found");
-
-            producerEntity.Name= producerDTO.Name;
-            producerEntity.Label = producerDTO.Label;
-            producerEntity.Info = producerDTO.Info;
-            _context.Producers.Update(producerEntity);
+            var producer = _mapper.Map<Producer>(producerDTO);
+            _context.Entry(producer).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
         }

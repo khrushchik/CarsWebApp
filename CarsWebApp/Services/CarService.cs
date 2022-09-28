@@ -43,19 +43,12 @@ namespace CarsWebApp.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<CarDTO>(car);
         }
-        public async Task EditCar(CarDTO dto)
+        public async Task EditCar(int id, CarDTO dto)
         {
-            var carEntity = await _context.Cars.FirstOrDefaultAsync(i => i.Id == dto.Id);
-            if (carEntity == null)
+            if (id != dto.Id)
                 throw new KeyNotFoundException("Car is`t found");
-            carEntity.Info = dto.Info;
-            carEntity.Photo = dto.Photo;
-            carEntity.Transmission = dto.Transmission;
-            carEntity.Body = dto.Transmission;
-            carEntity.Color = dto.Color;
-            carEntity.DealerId = (int)dto.DealerId;
-            carEntity.Year = (int)dto.Year;
-            _context.Cars.Update(carEntity);
+            var car = _mapper.Map<Car>(dto);
+            _context.Entry(car).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
         public async Task PatchCar(CarDTO dto)

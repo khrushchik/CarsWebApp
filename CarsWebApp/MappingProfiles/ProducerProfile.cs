@@ -10,6 +10,7 @@ namespace CarsWebApp.MappingProfiles
         {
             CreateMap<Producer, ProducerDTO>();
             CreateMap<ProducerCreateDTO, Producer>();
+            CreateMap<ProducerDTO, Producer>();
         }
     }
 }

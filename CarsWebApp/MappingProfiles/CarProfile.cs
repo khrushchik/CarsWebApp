@@ -10,6 +10,7 @@ namespace CarsWebApp.MappingProfiles
         {
             CreateMap<Car, CarDTO>();
             CreateMap<CarCreateDTO, Car>();
+            CreateMap<CarDTO, Car>();
         }
     }
 }

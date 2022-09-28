@@ -53,10 +53,10 @@ namespace CarsWebApp.Controllers
             return NoContent();
         }
 
-        [HttpPut]
-        public async Task<ActionResult<ProducerDTO>> EditProducer([FromBody] ProducerDTO dto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ProducerDTO>> EditProducer(int id, [FromBody] ProducerDTO dto)
         {
-            await _producerService.EditProducer(dto);
+            await _producerService.EditProducer(id, dto);
             return NoContent();
         }
 

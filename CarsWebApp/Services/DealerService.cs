@@ -50,19 +50,12 @@ namespace CarsWebApp.Services
             await _context.SaveChangesAsync();
             return _mapper.Map<DealerDTO>(dealer);
         }
-        public async Task EditDealer(DealerDTO dto)
+        public async Task EditDealer(int id, DealerDTO dto)
         {
-            var dealerEntity = await _context.Dealers.FirstOrDefaultAsync(i=>i.Id == dto.Id);
-            if (dealerEntity == null)
-               throw new KeyNotFoundException("Dealer is`t found");
-/*          var dealer = _mapper.Map<Dealer>(dto);
-            _context.Entry(dealer).State = EntityState.Modified;*/
-            dealerEntity.Name = dto.Name;
-            dealerEntity.Address = dto.Address;
-            dealerEntity.ProducerId = (int)dto.ProducerId;
-            dealerEntity.Info = dto.Info;
-            dealerEntity.Icon = dto.Icon;
-            _context.Dealers.Update(dealerEntity);
+            if (id != dto.Id)
+                throw new KeyNotFoundException("Dealer is`t found");
+            var dealer = _mapper.Map<Dealer>(dto);
+            _context.Entry(dealer).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
         }
