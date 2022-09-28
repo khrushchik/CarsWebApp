@@ -58,12 +58,12 @@ namespace CarsWebApp.Repositories
             await _context.SaveChangesAsync();
             return producer;
         }
-        public async Task<Producer> ChangeInfo(Producer producer)
+        public async Task<Producer> ChangeInfo(int id, Producer producer)
         {
-            var producerEntity = await _context.Producers.FirstOrDefaultAsync(i => i.Id == producer.Id);
-            if (producerEntity == null)
+            var producerEntity = await _context.Producers.FirstOrDefaultAsync(i => i.Id == id);
+            if (producerEntity is null)
                 throw new KeyNotFoundException("Producer is`t found");
-                producerEntity.Info = producer.Info;
+            producerEntity.Info = producer.Info;
             _context.Producers.Update(producerEntity);
             await _context.SaveChangesAsync();
             return producerEntity;

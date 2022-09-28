@@ -17,10 +17,10 @@ namespace CarsWebApp.Repositories
             _mapper = mapper;
             _producerRepository = producerRepository;
         }
-        public async Task<ProducerInfoDomain> ChangeProducerInfo(ProducerInfoDomain producerInfoDomain)
+        public async Task<ProducerInfoDomain> ChangeProducerInfo(int id, ProducerInfoDomain producerInfoDomain)
         {
             var producer = _mapper.Map<Producer>(producerInfoDomain);
-            return _mapper.Map<ProducerInfoDomain>(await _producerRepository.ChangeInfo(producer));
+            return _mapper.Map<ProducerInfoDomain>(await _producerRepository.ChangeInfo(id, producer));
         }
 
         public async Task<ProducerCreateDomain> CreateProducer(ProducerCreateDomain producerCreateDomain)

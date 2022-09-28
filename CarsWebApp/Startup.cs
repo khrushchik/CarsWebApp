@@ -17,7 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarsWebApp.Interfaces;
 using CarsWebApp.Repositories;
-
+using CarsWebApp.Services;
 namespace CarsWebApp
 {
     public class Startup
@@ -37,7 +37,9 @@ namespace CarsWebApp
             services.AddScoped<IRepository<Car>, CarRepository>();
             services.AddScoped<IRepository<Producer>, ProducerRepository>();
             services.AddScoped<IRepository<Dealer>, DealerRepository>();
-            services.AddScoped<IProducerService, ProducerService>();
+            services.AddScoped<IProducerService, Services.ProducerService>();
+            services.AddScoped<ICarService, Services.CarService>();
+            services.AddScoped<IDealerService, Services.DealerService>();
             services.AddScoped<ProducerRepository>();
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc =>

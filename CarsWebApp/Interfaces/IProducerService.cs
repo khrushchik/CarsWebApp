@@ -12,7 +12,7 @@ namespace CarsWebApp.Interfaces
         Task<ProducerCreateDomain> CreateProducer(ProducerCreateDomain producerCreateDomain);
         Task<ProducerDomain> UpdateProducer(int id, ProducerDomain producerDomain);
         Task<ProducerDomain> DeleteProducer(int id);
-        Task<ProducerInfoDomain> ChangeProducerInfo(ProducerInfoDomain producerInfoDomain);
+        Task<ProducerInfoDomain> ChangeProducerInfo(int id, ProducerInfoDomain producerInfoDomain);
 
     }
 }

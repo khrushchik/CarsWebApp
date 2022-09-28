@@ -13,17 +13,15 @@ namespace CarsWebApp.Repositories
     public class DealerRepository:IRepository<Dealer>
     {
         private readonly CarContext _context;
-        private readonly IMapper _mapper;
-        public DealerRepository(CarContext context, IMapper mapper)
+        public DealerRepository(CarContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public async Task<Dealer> ChangeInfo(Dealer dealer)
+        public async Task<Dealer> ChangeInfo(int id,Dealer dealer)
         {
-            var dealerEntity = await _context.Dealers.FirstOrDefaultAsync(i => i.Id == dealer.Id);
-            if (dealerEntity == null)
+            var dealerEntity = await _context.Dealers.FirstOrDefaultAsync(i => i.Id == id);
+            if (dealerEntity is null)
                 throw new KeyNotFoundException("Dealer is`t found");
                 dealerEntity.Info = dealer.Info;
             _context.Dealers.Update(dealerEntity);

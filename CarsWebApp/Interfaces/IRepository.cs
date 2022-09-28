@@ -10,7 +10,7 @@ namespace CarsWebApp.Interfaces
         Task<T> Create(T item);
         Task<T> Update(int id, T item);
         Task<T> Delete(int id);
-        Task<T> ChangeInfo(T item);
+        Task<T> ChangeInfo(int id, T item);
 
 
     }
