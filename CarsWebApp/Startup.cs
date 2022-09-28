@@ -33,9 +33,9 @@ namespace CarsWebApp
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<CarContext>(options => options.UseSqlServer(connection));
-            services.AddScoped<CarService>();
-            services.AddScoped<ProducerService>();
-            services.AddScoped<DealerService>();
+            services.AddScoped<CarRepository>();
+            services.AddScoped<ProducerRepository>();
+            services.AddScoped<DealerRepository>();
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc =>
             {

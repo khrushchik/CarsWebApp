@@ -12,9 +12,9 @@ namespace CarsWebApp.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly CarService _carService;
+        private readonly CarRepository _carService;
 
-        public CarsController(CarService carService)
+        public CarsController(CarRepository carService)
         {
             _carService = carService;
         }

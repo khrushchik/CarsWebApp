@@ -15,9 +15,9 @@ namespace CarsWebApp.Controllers
     [ApiController]
     public class ProducersController : ControllerBase
     {
-        private readonly ProducerService _producerService;
+        private readonly ProducerRepository _producerService;
 
-        public ProducersController(ProducerService producerService)
+        public ProducersController(ProducerRepository producerService)
         {
             _producerService = producerService;
         }
@@ -43,7 +43,7 @@ namespace CarsWebApp.Controllers
         [HttpPost]
         public async Task<ActionResult<ProducerDTO>> CreateProducer([FromBody] ProducerCreateDTO dto)
         {
-            return Ok(await _producerService.CreateProducer(dto));
+            return Ok(await _producerService.CreateProducer(dto)); 
         }
 
         [HttpDelete("{id}")]
@@ -56,15 +56,15 @@ namespace CarsWebApp.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<ProducerDTO>> EditProducer(int id, [FromBody] ProducerDTO dto)
         {
-            await _producerService.EditProducer(id, dto);
-            return NoContent();
+            await _producerService.UpdateProducer(id, dto);
+            return NoContent();//ok
         }
 
         [HttpPatch]
         public async Task<ActionResult<ProducerDTO>> PatchProducer([FromBody] ProducerDTO dto)
         {
             await _producerService.PatchProducer(dto);
-            return NoContent();
+            return NoContent();//ok
         }
     }
 }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace CarsWebApp.Services
 {
-    public class CarService
+    public class CarRepository
     {
         private readonly CarContext _context;
         private readonly IMapper _mapper;
 
-        public CarService(CarContext carContext, IMapper mapper)
+        public CarRepository(CarContext carContext, IMapper mapper)
         {
             _context = carContext;
             _mapper = mapper;

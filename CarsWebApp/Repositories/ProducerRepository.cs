@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CarsWebApp.Services
 {
-    public class ProducerService
+    public class ProducerRepository
     {
         private readonly CarContext _context;
         private readonly IMapper _mapper;
 
-        public ProducerService(CarContext context, IMapper mapper)
+        public ProducerRepository(CarContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -60,7 +60,7 @@ namespace CarsWebApp.Services
             return _mapper.Map<ProducerDTO>(producer);
         }
 
-        public async Task EditProducer(int id, ProducerDTO producerDTO)
+        public async Task UpdateProducer(int id, ProducerDTO producerDTO)
         {
             if(id!=producerDTO.Id)
                 throw new KeyNotFoundException("Producer is`t found");
@@ -70,7 +70,7 @@ namespace CarsWebApp.Services
 
         }
 
-        public async Task PatchProducer(ProducerDTO producerDTO)
+        public async Task PatchProducer(ProducerDTO producerDTO) //
         {
             var producerEntity = await _context.Producers.FirstOrDefaultAsync(i=>i.Id == producerDTO.Id);
             if (producerEntity == null)

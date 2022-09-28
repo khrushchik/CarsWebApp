@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CarsWebApp.Services
 {
-    public class DealerService
+    public class DealerRepository
     {
         private readonly CarContext _context;
         private readonly IMapper _mapper;
-        public DealerService(CarContext context, IMapper mapper)
+        public DealerRepository(CarContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
