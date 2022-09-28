@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using CarsWebApp.Domains;
+using CarsWebApp.Interfaces;
 using CarsWebApp.Models;
 using CarsWebApp.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CarsWebApp.Repositories
+namespace CarsWebApp.Service
 {
-    public class CarService
+    public class CarService:ICarService
     {
         private readonly IMapper _mapper;
         private readonly CarRepository _carRepository;

@@ -3,10 +3,11 @@ using CarsWebApp.Domains;
 using CarsWebApp.DTOs;
 using CarsWebApp.Interfaces;
 using CarsWebApp.Models;
+using CarsWebApp.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 //using ProducerEntity = CarsWebApp.Models.Producer;
-namespace CarsWebApp.Repositories
+namespace CarsWebApp.Service
 {
     public class ProducerService : IProducerService
     {
@@ -48,7 +49,7 @@ namespace CarsWebApp.Repositories
         {
             var producer = _mapper.Map<Producer>(producerDomain);
             return _mapper.Map<ProducerDomain>(await _producerRepository.Update(id, producer));
-            
+
         }
     }
 }

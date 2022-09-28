@@ -6,9 +6,9 @@ using CarsWebApp.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CarsWebApp.Repositories
+namespace CarsWebApp.Service
 {
-    public class DealerService:IDealerService
+    public class DealerService : IDealerService
     {
         private readonly IMapper _mapper;
         private readonly DealerRepository _dealerRepository;
