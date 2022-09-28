@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CarsWebApp.Domains;
 using CarsWebApp.DTOs;
 using CarsWebApp.Models;
 
@@ -8,9 +9,22 @@ namespace CarsWebApp.MappingProfiles
     {
         public DealerProfile()
         {
-            CreateMap<Dealer, DealerDTO>();
+            CreateMap<Dealer, DealerDTO>().ReverseMap();
             CreateMap<DealerCreateDTO, Dealer>();
-            CreateMap<DealerDTO, Dealer>();
+
+            CreateMap<Dealer, DealerDomain>();
+
+
+            CreateMap<DealerInfoDTO, Dealer>();
+
+            CreateMap<DealerDomain, DealerDTO>().ReverseMap();
+
+
+            CreateMap<DealerInfoDomain, Dealer>().ReverseMap();
+
+            CreateMap<DealerCreateDTO, DealerCreateDomain>().ReverseMap();
+            CreateMap<DealerCreateDomain, Dealer>().ReverseMap();
+            CreateMap<DealerInfoDTO, DealerInfoDomain>().ReverseMap();
         }
     }
 }

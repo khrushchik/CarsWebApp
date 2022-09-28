@@ -1,6 +1,9 @@
-﻿using CarsWebApp.DTOs;
+﻿using AutoMapper;
+using CarsWebApp.Domains;
+using CarsWebApp.DTOs;
+using CarsWebApp.Interfaces;
 using CarsWebApp.Models;
-using CarsWebApp.Services;
+using CarsWebApp.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,54 +15,55 @@ namespace CarsWebApp.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly CarService _carService;
-
-        public CarsController(CarService carService)
+        private readonly ICarService _carService;
+        private readonly IMapper _mapper;
+        public CarsController(ICarService carService, IMapper mapper)
         {
             _carService = carService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Car>>> GetAllCars()
+        public async Task<ActionResult<IEnumerable<CarDTO>>> GetCarsAsync()
         {
-            return Ok(await _carService.GetAllCars());
+            var cars = await _carService.GetCars();
+            return Ok(_mapper.Map<IEnumerable<CarDTO>>(cars));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Car>> GetCarById(int id)
+        public async Task<ActionResult<CarDTO>> GetCarByIdAsync(int id)
         {
             var car = await _carService.GetCarById(id);
-            if (car == null)
+            if (car is null)
                 return NotFound();
-            return Ok(car);
-        }
-        [HttpPost]
-        public async Task<ActionResult<CarDTO>> CreateCar([FromBody] CarCreateDTO carCreateDTO)
-        {
-            return Ok(await _carService.CreateCar(carCreateDTO));
+            return Ok(_mapper.Map<CarDTO>(car));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCar(int id)
         {
-            var car = await _carService.DeleteCar(id);
-            if (car == null)
-                return NotFound();
+            await _carService.DeleteCar(id);
             return NoContent();
         }
 
+        [HttpPost]
+        public async Task<ActionResult<CarDTO>> CreateCarAsync([FromBody] CarCreateDTO dto)
+        {
+            var car = _mapper.Map<CarCreateDomain>(dto);
+            return Ok(_mapper.Map<CarCreateDTO>(await _carService.CreateCar(car)));
+        }
         [HttpPut("{id}")]
-        public async Task<ActionResult<CarDTO>> EditCar(int id, [FromBody] CarDTO dto)
+        public async Task<ActionResult<CarDTO>> UpdateCarAsync(int id, [FromBody] CarDTO dto)
         {
-            await _carService.EditCar(id, dto);
-            return NoContent();
-        }
+            var car = _mapper.Map<CarDomain>(dto);
+            return Ok(_mapper.Map<CarDTO>(await _carService.UpdateCar(id, car)));
 
-        [HttpPatch]
-        public async Task<ActionResult<CarDTO>> PatchCar([FromBody] CarDTO dto)
+        }
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<CarInfoDTO>> ChangeCarInfoAsync(int id, [FromBody] CarInfoDTO dto)
         {
-            await _carService.PatchCar(dto);
-            return NoContent();
+            var carInfo = _mapper.Map<CarInfoDomain>(dto);
+            return Ok(_mapper.Map<CarInfoDTO>(await _carService.ChangeCarInfo(id, carInfo)));
         }
     }
 }

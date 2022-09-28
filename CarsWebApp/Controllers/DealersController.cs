@@ -1,6 +1,9 @@
-﻿using CarsWebApp.DTOs;
+﻿using AutoMapper;
+using CarsWebApp.Domains;
+using CarsWebApp.DTOs;
+using CarsWebApp.Interfaces;
 using CarsWebApp.Models;
-using CarsWebApp.Services;
+using CarsWebApp.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,54 +15,56 @@ namespace CarsWebApp.Controllers
     [ApiController]
     public class DealersController : ControllerBase
     {
-        private readonly DealerService _dealerService;
-
-        public DealersController(DealerService dealerService)
+        private readonly IDealerService _dealerService;
+        private readonly IMapper _mapper;
+        public DealersController(IDealerService dealerService, IMapper mapper)
         {
             _dealerService = dealerService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Dealer>>> GetAllDealers()
+        public async Task<ActionResult<IEnumerable<DealerDTO>>> GetDealersAsync()
         {
-            return Ok(await _dealerService.GetAllDealers());
+            var dealers = await _dealerService.GetDealers();
+            return Ok(_mapper.Map<IEnumerable<DealerDTO>>(dealers));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Dealer>> GetDealerById(int id)
+        public async Task<ActionResult<DealerDTO>> GetDealerByIdAsync(int id)
         {
             var dealer = await _dealerService.GetDealerById(id);
-            if(dealer == null)
+            if (dealer is null)
                 return NotFound();
-            return Ok(dealer);
-        }
-        [HttpPost]
-        public async Task<ActionResult<DealerDTO>> CreateDealer([FromBody] DealerCreateDTO dealerCreateDTO)
-        {
-            return Ok(await _dealerService.CreateDealer(dealerCreateDTO));
+            return Ok(_mapper.Map<DealerDTO>(dealer));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDealer(int id)
         {
-            var dealer = await _dealerService.DeleteDealer(id);
-            if (dealer == null)
-                return NotFound();
+            await _dealerService.DeleteDealer(id);
             return NoContent();
         }
 
+        [HttpPost]
+        public async Task<ActionResult<DealerDTO>> CreateDealerAsync([FromBody] DealerCreateDTO dto)
+        {
+            var dealer = _mapper.Map<DealerCreateDomain>(dto);
+            return Ok(_mapper.Map<DealerCreateDTO>(await _dealerService.CreateDealer(dealer)));
+        }
         [HttpPut("{id}")]
-        public async Task<ActionResult<DealerDTO>> EditDealer(int id, [FromBody] DealerDTO dto)
+        public async Task<ActionResult<DealerDTO>> UpdateDealerAsync(int id, [FromBody] DealerDTO dto)
         {
-            await _dealerService.EditDealer(id, dto);
-            return NoContent();
-        }
+            var dealer = _mapper.Map<DealerDomain>(dto);
+            return Ok(_mapper.Map<DealerDTO>(await _dealerService.UpdateDealer(id, dealer)));
 
-        [HttpPatch]
-        public async Task<ActionResult<DealerDTO>> PatchDealer([FromBody] DealerDTO dto)
-        {
-            await _dealerService.PatchDealer(dto);
-            return NoContent();
         }
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<DealerInfoDTO>> ChangeDealerInfoAsync(int id, [FromBody] DealerInfoDTO dto)
+        {
+            var dealerInfo = _mapper.Map<DealerInfoDomain>(dto);
+            return Ok(_mapper.Map<DealerInfoDTO>(await _dealerService.ChangeDealerInfo(id, dealerInfo)));
+        }
+        
     }
 }

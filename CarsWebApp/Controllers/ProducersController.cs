@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarsWebApp.Models;
-using CarsWebApp.Services;
+using CarsWebApp.Repositories;
 using CarsWebApp.DTOs;
+using CarsWebApp.Interfaces;
+using AutoMapper;
+using CarsWebApp.Domains;
 
 namespace CarsWebApp.Controllers
 {
@@ -15,35 +18,28 @@ namespace CarsWebApp.Controllers
     [ApiController]
     public class ProducersController : ControllerBase
     {
-        private readonly ProducerService _producerService;
-
-        public ProducersController(ProducerService producerService)
+        private readonly IProducerService _producerService;
+        private readonly IMapper _mapper;
+        public ProducersController(IProducerService producerService, IMapper mapper)
         {
             _producerService = producerService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Producer>>> GetProducers()
+        public async Task<ActionResult<IEnumerable<ProducerDTO>>> GetProducersAsync()
         {
-            return Ok(await _producerService.GetAllProducers());
+            var producers = await _producerService.GetProducers();
+            return Ok( _mapper.Map<IEnumerable<ProducerDTO>>(producers));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Producer>> GetProducer(int id)
+        public async Task<ActionResult<ProducerDTO>> GetProducerByIdAsync(int id)
         {
             var producer = await _producerService.GetProducerById(id);
-
-            if (producer == null)
-            {
+            if (producer is null)
                 return NotFound();
-            }
-            return Ok(producer);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<ProducerDTO>> CreateProducer([FromBody] ProducerCreateDTO dto)
-        {
-            return Ok(await _producerService.CreateProducer(dto));
+             return Ok( _mapper.Map<ProducerDTO>(producer));
         }
 
         [HttpDelete("{id}")]
@@ -53,18 +49,24 @@ namespace CarsWebApp.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<ProducerDTO>> EditProducer(int id, [FromBody] ProducerDTO dto)
+        [HttpPost]
+        public async Task<ActionResult<ProducerDTO>> CreateProducerAsync([FromBody] ProducerCreateDTO dto)
         {
-            await _producerService.EditProducer(id, dto);
-            return NoContent();
+            var producer = _mapper.Map<ProducerCreateDomain>(dto);
+            return Ok(_mapper.Map<ProducerCreateDTO>(await _producerService.CreateProducer(producer)));
         }
-
-        [HttpPatch]
-        public async Task<ActionResult<ProducerDTO>> PatchProducer([FromBody] ProducerDTO dto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ProducerDTO>> UpdateProducerAsync(int id, [FromBody] ProducerDTO dto)
         {
-            await _producerService.PatchProducer(dto);
-            return NoContent();
+            var producer = _mapper.Map<ProducerDomain>(dto);
+            return Ok(_mapper.Map<ProducerDTO>(await _producerService.UpdateProducer(id, producer)));
+
+        }
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<ProducerInfoDTO>> ChangeProducerInfoAsync(int id, [FromBody] ProducerInfoDTO dto)
+        {
+            var producerInfo = _mapper.Map<ProducerInfoDomain>(dto);
+            return Ok(_mapper.Map<ProducerInfoDTO>( await _producerService.ChangeProducerInfo(id, producerInfo)));
         }
     }
 }
