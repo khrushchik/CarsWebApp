@@ -20,7 +20,7 @@ namespace CarsWebApp.Repositories
             _mapper = mapper;
         }
 
-        public async Task ChangeInfo(Dealer dealer)
+        public async Task<Dealer> ChangeInfo(Dealer dealer)
         {
             var dealerEntity = await _context.Dealers.FirstOrDefaultAsync(i => i.Id == dealer.Id);
             if (dealerEntity == null)
@@ -28,6 +28,7 @@ namespace CarsWebApp.Repositories
                 dealerEntity.Info = dealer.Info;
             _context.Dealers.Update(dealerEntity);
             await _context.SaveChangesAsync();
+            return dealerEntity;
         }
 
         public async Task<Dealer> Create(Dealer dealer)
@@ -63,12 +64,13 @@ namespace CarsWebApp.Repositories
             return dealers;
         }
 
-        public async Task Update(int id, Dealer dealer)
+        public async Task<Dealer> Update(int id, Dealer dealer)
         {
             if (id != dealer.Id)
                 throw new KeyNotFoundException("Dealer is`t found");
             _context.Entry(dealer).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return dealer;
         }
 
 

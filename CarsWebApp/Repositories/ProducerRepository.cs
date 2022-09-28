@@ -12,12 +12,10 @@ namespace CarsWebApp.Repositories
     public class ProducerRepository:IRepository<Producer>
     {
         private readonly CarContext _context;
-        private readonly IMapper _mapper;
 
-        public ProducerRepository(CarContext context, IMapper mapper)
+        public ProducerRepository(CarContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
         
         public async Task<IEnumerable<Producer>> GetAll()
@@ -52,14 +50,15 @@ namespace CarsWebApp.Repositories
             await _context.SaveChangesAsync();
             return producer;
         }
-        public async Task Update(int id, Producer producer)
+        public async Task<Producer> Update(int id, Producer producer)
         {
             if (id != producer.Id)
                 throw new KeyNotFoundException("Producer is`t found");
             _context.Entry(producer).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return producer;
         }
-        public async Task ChangeInfo(Producer producer)
+        public async Task<Producer> ChangeInfo(Producer producer)
         {
             var producerEntity = await _context.Producers.FirstOrDefaultAsync(i => i.Id == producer.Id);
             if (producerEntity == null)
@@ -67,6 +66,7 @@ namespace CarsWebApp.Repositories
                 producerEntity.Info = producer.Info;
             _context.Producers.Update(producerEntity);
             await _context.SaveChangesAsync();
+            return producerEntity;
         }
         /*
         public async Task<IEnumerable<ProducerDTO>> GetAllProducers()

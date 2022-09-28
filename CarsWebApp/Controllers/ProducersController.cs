@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using CarsWebApp.Models;
 using CarsWebApp.Repositories;
 using CarsWebApp.DTOs;
+using CarsWebApp.Interfaces;
+using AutoMapper;
 
 namespace CarsWebApp.Controllers
 {
@@ -15,6 +17,21 @@ namespace CarsWebApp.Controllers
     [ApiController]
     public class ProducersController : ControllerBase
     {
+        private readonly IProducerService _producerService;
+        private readonly IMapper _mapper;
+        public ProducersController(IProducerService producerService, IMapper mapper)
+        {
+            _producerService = producerService;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProducerDTO>>> GetProducersAsync()
+        {
+            var producers = await _producerService.GetProducers();
+            return Ok( _mapper.Map<ProducerDTO>(producers));
+        }
+
         /*private readonly ProducerRepository _producerService;
 
         public ProducersController(ProducerRepository producerService)

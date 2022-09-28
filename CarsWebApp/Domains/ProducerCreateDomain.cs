@@ -1,8 +1,7 @@
-﻿namespace CarsWebApp.ViewModels
+﻿namespace CarsWebApp.Domains
 {
-    public class ProducerViewModel
+    public class ProducerCreateDomain
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Label { get; set; }
         public string Info { get; set; }

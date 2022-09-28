@@ -8,9 +8,9 @@ namespace CarsWebApp.Interfaces
         Task<IEnumerable<T>> GetAll();
         Task<T> Get(int id);
         Task<T> Create(T item);
-        Task Update(int id, T item);
+        Task<T> Update(int id, T item);
         Task<T> Delete(int id);
-        Task ChangeInfo(T item);
+        Task<T> ChangeInfo(T item);
 
 
     }

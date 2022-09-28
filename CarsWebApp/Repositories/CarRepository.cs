@@ -19,7 +19,7 @@ namespace CarsWebApp.Repositories
             _mapper = mapper;
         }
 
-        public async Task ChangeInfo(Car car)
+        public async Task<Car> ChangeInfo(Car car)
         {
             var carEntity = await _context.Cars.FirstOrDefaultAsync(i => i.Id == car.Id);
             if (carEntity == null)
@@ -27,6 +27,7 @@ namespace CarsWebApp.Repositories
             carEntity.Info = car.Info;
             _context.Cars.Update(carEntity);
             await _context.SaveChangesAsync();
+            return carEntity;
         }
 
         public async Task<Car> Create(Car car)
@@ -56,12 +57,13 @@ namespace CarsWebApp.Repositories
             return cars;
         }
 
-        public async Task Update(int id, Car car)
+        public async Task<Car> Update(int id, Car car)
         {
             if (id != car.Id)
                 throw new KeyNotFoundException("Car is`t found");
             _context.Entry(car).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return car;
         }
 
 

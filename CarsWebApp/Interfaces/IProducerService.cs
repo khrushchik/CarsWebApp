@@ -1,4 +1,5 @@
-﻿using CarsWebApp.DTOs;
+﻿using CarsWebApp.Domains;
+using CarsWebApp.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,12 +7,12 @@ namespace CarsWebApp.Interfaces
 {
     public interface IProducerService
     {
-        IEnumerable<ProducerDTO> GetProducers();
-        ProducerDTO GetProducerById(int id);
-        ProducerCreateDTO CreateProducer(ProducerCreateDTO producerCreateDTO);
-        void UpdateProducer(int id, ProducerDTO producerDTO);
-        ProducerDTO DeleteProducer(int id);
-        void ChangeProducerInfo(ProducerInfoDTO producerInfoDTO);
+        Task<IEnumerable<ProducerDomain>> GetProducers();
+        Task<ProducerDomain> GetProducerById(int id);
+        Task<ProducerCreateDomain> CreateProducer(ProducerCreateDomain producerCreateDomain);
+        Task<ProducerDomain> UpdateProducer(int id, ProducerDomain producerDomain);
+        Task<ProducerDomain> DeleteProducer(int id);
+        Task<ProducerInfoDomain> ChangeProducerInfo(ProducerInfoDomain producerInfoDomain);
 
     }
 }

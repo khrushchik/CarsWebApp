@@ -37,6 +37,8 @@ namespace CarsWebApp
             services.AddScoped<IRepository<Car>, CarRepository>();
             services.AddScoped<IRepository<Producer>, ProducerRepository>();
             services.AddScoped<IRepository<Dealer>, DealerRepository>();
+            services.AddScoped<IProducerService, ProducerService>();
+            services.AddScoped<ProducerRepository>();
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc =>
             {
