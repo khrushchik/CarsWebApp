@@ -10,6 +10,7 @@ namespace CarsWebApp.MappingProfiles
         {
             CreateMap<Producer, ProducerDTO>().ReverseMap();
             CreateMap<ProducerCreateDTO, Producer>();
+            CreateMap<ProducerInfoDTO, Producer>();
         }
     }
 }

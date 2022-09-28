@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarsWebApp.Models;
-using CarsWebApp.Services;
+using CarsWebApp.Repositories;
 using CarsWebApp.DTOs;
 
 namespace CarsWebApp.Controllers
@@ -15,7 +15,7 @@ namespace CarsWebApp.Controllers
     [ApiController]
     public class ProducersController : ControllerBase
     {
-        private readonly ProducerRepository _producerService;
+        /*private readonly ProducerRepository _producerService;
 
         public ProducersController(ProducerRepository producerService)
         {
@@ -65,6 +65,6 @@ namespace CarsWebApp.Controllers
         {
             await _producerService.PatchProducer(dto);
             return NoContent();//ok
-        }
+        }*/
     }
 }

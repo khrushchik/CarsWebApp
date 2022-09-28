@@ -1,7 +1,6 @@
 using AutoMapper;
 using CarsWebApp.MappingProfiles;
 using CarsWebApp.Models;
-using CarsWebApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarsWebApp.Interfaces;
+using CarsWebApp.Repositories;
 
 namespace CarsWebApp
 {
@@ -33,9 +34,9 @@ namespace CarsWebApp
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<CarContext>(options => options.UseSqlServer(connection));
-            services.AddScoped<CarRepository>();
-            services.AddScoped<ProducerRepository>();
-            services.AddScoped<DealerRepository>();
+            services.AddScoped<IRepository<Car>, CarRepository>();
+            services.AddScoped<IRepository<Producer>, ProducerRepository>();
+            services.AddScoped<IRepository<Dealer>, DealerRepository>();
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc =>
             {

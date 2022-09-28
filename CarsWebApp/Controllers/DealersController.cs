@@ -1,6 +1,6 @@
 ﻿using CarsWebApp.DTOs;
 using CarsWebApp.Models;
-using CarsWebApp.Services;
+using CarsWebApp.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace CarsWebApp.Controllers
     [ApiController]
     public class DealersController : ControllerBase
     {
-        private readonly DealerRepository _dealerService;
+        /*private readonly DealerRepository _dealerService;
 
         public DealersController(DealerRepository dealerService)
         {
@@ -60,6 +60,6 @@ namespace CarsWebApp.Controllers
         {
             await _dealerService.PatchDealer(dto);
             return NoContent();
-        }
+        }*/
     }
 }

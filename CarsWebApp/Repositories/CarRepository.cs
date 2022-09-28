@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CarsWebApp.Services
+namespace CarsWebApp.Repositories
 {
     public class CarRepository:IRepository<Car>
     {

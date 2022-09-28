@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarsWebApp.Services
+namespace CarsWebApp.Repositories
 {
     public class DealerRepository:IRepository<Dealer>
     {
