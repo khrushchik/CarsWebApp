@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CarsWebApp.DTOs;
+using CarsWebApp.Interfaces;
 using CarsWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CarsWebApp.Services
 {
-    public class ProducerRepository
+    public class ProducerRepository:IRepository<Producer>
     {
         private readonly CarContext _context;
         private readonly IMapper _mapper;
@@ -18,6 +19,56 @@ namespace CarsWebApp.Services
             _context = context;
             _mapper = mapper;
         }
+        
+        public async Task<IEnumerable<Producer>> GetAll()
+        {
+            return await _context.Producers.Include(p => p.Dealers).ThenInclude(d => d.Cars).ToListAsync();
+        }
+        public async Task<Producer> Get(int id)
+        {
+            return await _context.Producers.Include(d=>d.Dealers).ThenInclude(d=>d.Cars).FirstOrDefaultAsync(i=>i.Id==id);
+        }
+        public async Task<Producer> Create(Producer producer)
+        {
+            _context.Producers.Add(producer);
+            await _context.SaveChangesAsync();
+            return producer;
+        }
+        public async Task<Producer> Delete(int id)
+        {
+            var producer = await _context.Producers.FindAsync(id);
+            IQueryable<Dealer> dealers = from db in _context.Dealers where db.ProducerId == id select db;
+            foreach (Dealer dealer in dealers)
+            {
+                var dealerId = dealer.Id;
+                IQueryable<Car> cars = from db in _context.Cars where db.DealerId == dealerId select db;
+                foreach (Car car in cars)
+                {
+                    _context.Cars.Remove(car);
+                }
+                _context.Dealers.Remove(dealer);
+            }
+            _context.Producers.Remove(producer);
+            await _context.SaveChangesAsync();
+            return producer;
+        }
+        public async Task Update(int id, Producer producer)
+        {
+            if (id != producer.Id)
+                throw new KeyNotFoundException("Producer is`t found");
+            _context.Entry(producer).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+        public async Task ChangeInfo(Producer producer)
+        {
+            var producerEntity = await _context.Producers.FirstOrDefaultAsync(i => i.Id == producer.Id);
+            if (producerEntity == null)
+                throw new KeyNotFoundException("Producer is`t found");
+                producerEntity.Info = producer.Info;
+            _context.Producers.Update(producerEntity);
+            await _context.SaveChangesAsync();
+        }
+        /*
         public async Task<IEnumerable<ProducerDTO>> GetAllProducers()
         {
             var producers = await _context.Producers.Include(p=>p.Dealers).ThenInclude(d=>d.Cars).ToListAsync();
@@ -84,6 +135,6 @@ namespace CarsWebApp.Services
             _context.Producers.Update(producerEntity);
             await _context.SaveChangesAsync();
 
-        }
+        }*/
     }
 }
