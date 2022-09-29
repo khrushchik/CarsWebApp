@@ -17,15 +17,9 @@ namespace CarsWebApp.MappingProfiles
 
             CreateMap<Car, CarDomain>();
 
-            CreateMap<Car, CarDTO>().ReverseMap();
-
-            CreateMap<CarCreateDTO, Car>();
-
             CreateMap<CarInfoDTO, Car>();
 
             CreateMap<CarDomain, CarDTO>().ReverseMap();
-
-            CreateMap<Car, CarDomain>();
 
             CreateMap<CarInfoDomain, Car>().ReverseMap();
 
