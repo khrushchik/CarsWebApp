@@ -3,8 +3,11 @@ using CarsWebApp.Domains;
 using CarsWebApp.Interfaces;
 using CarsWebApp.Models;
 using CarsWebApp.Repositories;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using UserCreate = CarsWebApp.Domains.UserCreateDomain;
 
 namespace CarsWebApp.Service
 {
@@ -12,21 +15,24 @@ namespace CarsWebApp.Service
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        public UserService(IMapper mapper, IUserRepository userRepository)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public UserService(IMapper mapper, IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _userRepository = userRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<UserCreateDomain> CreateUserAsync(UserCreateDomain userCreateDomain)
+        public async Task<UserCreate> CreateUserAsync(UserCreate userCreateDomain)
         {
             var user = _mapper.Map<User>(userCreateDomain);
-            return _mapper.Map<UserCreateDomain>(await _userRepository.Create(user));
+            return _mapper.Map<UserCreate>(await _userRepository.CreateAsync(user));
         }
 
         public async Task<IEnumerable<UserDomain>> GetUsersASync()
         {
-            return _mapper.Map<IEnumerable<UserDomain>>(await _userRepository.GetUsers());
+            return _mapper.Map<IEnumerable<UserDomain>>(await _userRepository.GetUsersAsync());
         }
 
         public async Task<UserDomain> GetUserByEmailAsync(string email)
@@ -37,6 +43,15 @@ namespace CarsWebApp.Service
         public async Task<UserDomain> GetUserByIdAsync(int id)
         {
             return _mapper.Map<UserDomain>(await _userRepository.GetUserByIdAsync(id));
+        }
+        public string GetName()
+        {
+            var res = string.Empty;
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                res = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            }
+            return res;
         }
     }
 }

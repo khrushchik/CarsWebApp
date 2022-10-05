@@ -5,6 +5,8 @@ using CarsWebApp.Models;
 using CarsWebApp.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DealerInfo = CarsWebApp.Domains.DealerInfoDomain;
+using DealerCreate = CarsWebApp.Domains.DealerCreateDomain;
 
 namespace CarsWebApp.Service
 {
@@ -17,37 +19,37 @@ namespace CarsWebApp.Service
             _mapper = mapper;
             _dealerRepository = dealerRepository;
         }
-        public async Task<DealerInfoDomain> ChangeDealerInfo(int id, DealerInfoDomain dealerInfoDomain)
+        public async Task<DealerInfo> ChangeDealerInfoAsync(int id, DealerInfo dealerInfoDomain)
         {
             var dealer = _mapper.Map<Dealer>(dealerInfoDomain);
-            return _mapper.Map<DealerInfoDomain>(await _dealerRepository.ChangeInfo(id, dealer));
+            return _mapper.Map<DealerInfo>(await _dealerRepository.ChangeInfoAsync(id, dealer));
         }
 
-        public async Task<DealerCreateDomain> CreateDealer(DealerCreateDomain dealerCreateDomain)
+        public async Task<DealerCreate> CreateDealerAsync(DealerCreate dealerCreateDomain)
         {
             var dealer = _mapper.Map<Dealer>(dealerCreateDomain);
-            return _mapper.Map<DealerCreateDomain>(await _dealerRepository.Create(dealer));
+            return _mapper.Map<DealerCreate>(await _dealerRepository.CreateAsync(dealer));
         }
 
-        public async Task<DealerDomain> DeleteDealer(int id)
+        public async Task<DealerDomain> DeleteDealerAsync(int id)
         {
-            return _mapper.Map<DealerDomain>(await _dealerRepository.Delete(id));
+            return _mapper.Map<DealerDomain>(await _dealerRepository.DeleteAsync(id));
         }
 
-        public async Task<DealerDomain> GetDealerById(int id)
+        public async Task<DealerDomain> GetDealerByIdAsync(int id)
         {
-            return _mapper.Map<DealerDomain>(await _dealerRepository.Get(id));
+            return _mapper.Map<DealerDomain>(await _dealerRepository.GetAsync(id));
         }
 
-        public async Task<IEnumerable<DealerDomain>> GetDealers()
+        public async Task<IEnumerable<DealerDomain>> GetDealersAsync()
         {
             return _mapper.Map<IEnumerable<DealerDomain>>(await _dealerRepository.GetAll());
         }
 
-        public async Task<DealerDomain> UpdateDealer(int id, DealerDomain dealerDomain)
+        public async Task<DealerDomain> UpdateDealerAsync(int id, DealerDomain dealerDomain)
         {
             var dealer = _mapper.Map<Dealer>(dealerDomain);
-            return _mapper.Map<DealerDomain>(await _dealerRepository.Update(id, dealer));
+            return _mapper.Map<DealerDomain>(await _dealerRepository.UpdateAsync(id, dealer));
 
         }
     }

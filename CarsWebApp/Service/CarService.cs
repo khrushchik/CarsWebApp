@@ -5,6 +5,8 @@ using CarsWebApp.Models;
 using CarsWebApp.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CarInfo = CarsWebApp.Domains.CarInfoDomain;
+using CarCreate = CarsWebApp.Domains.CarCreateDomain;
 
 namespace CarsWebApp.Service
 {
@@ -17,37 +19,37 @@ namespace CarsWebApp.Service
             _mapper = mapper;
             _carRepository = carRepository;
         }
-        public async Task<CarInfoDomain> ChangeCarInfo(int id, CarInfoDomain carInfoDomain)
+        public async Task<CarInfo> ChangeCarInfoAsync(int id, CarInfo carInfoDomain)
         {
             var car = _mapper.Map<Car>(carInfoDomain);
-            return _mapper.Map<CarInfoDomain>(await _carRepository.ChangeInfo(id, car));
+            return _mapper.Map<CarInfo>(await _carRepository.ChangeInfoAsync(id, car));
         }
 
-        public async Task<CarCreateDomain> CreateCar(CarCreateDomain carCreateDomain)
+        public async Task<CarCreate> CreateCarAsync(CarCreate carCreateDomain)
         {
             var car = _mapper.Map<Car>(carCreateDomain);
-            return _mapper.Map<CarCreateDomain>(await _carRepository.Create(car));
+            return _mapper.Map<CarCreate>(await _carRepository.CreateAsync(car));
         }
 
-        public async Task<CarDomain> DeleteCar(int id)
+        public async Task<CarDomain> DeleteCarAsync(int id)
         {
-            return _mapper.Map<CarDomain>(await _carRepository.Delete(id));
+            return _mapper.Map<CarDomain>(await _carRepository.DeleteAsync(id));
         }
 
-        public async Task<CarDomain> GetCarById(int id)
+        public async Task<CarDomain> GetCarByIdAsync(int id)
         {
-            return _mapper.Map<CarDomain>(await _carRepository.Get(id));
+            return _mapper.Map<CarDomain>(await _carRepository.GetAsync(id));
         }
 
-        public async Task<IEnumerable<CarDomain>> GetCars()
+        public async Task<IEnumerable<CarDomain>> GetCarsAsync()
         {
             return _mapper.Map<IEnumerable<CarDomain>>(await _carRepository.GetAll());
         }
 
-        public async Task<CarDomain> UpdateCar(int id, CarDomain carDomain)
+        public async Task<CarDomain> UpdateCarAsync(int id, CarDomain carDomain)
         {
             var car = _mapper.Map<Car>(carDomain);
-            return _mapper.Map<CarDomain>(await _carRepository.Update(id, car));
+            return _mapper.Map<CarDomain>(await _carRepository.UpdateAsync(id, car));
 
         }
     }

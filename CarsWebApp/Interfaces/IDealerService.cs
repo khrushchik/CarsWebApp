@@ -6,11 +6,11 @@ namespace CarsWebApp.Interfaces
 {
     public interface IDealerService
     {
-        Task<IEnumerable<DealerDomain>> GetDealers();
-        Task<DealerDomain> GetDealerById(int id);
-        Task<DealerCreateDomain> CreateDealer(DealerCreateDomain dealerCreateDomain);
-        Task<DealerDomain> UpdateDealer(int id, DealerDomain dealerDomain);
-        Task<DealerDomain> DeleteDealer(int id);
-        Task<DealerInfoDomain> ChangeDealerInfo(int id, DealerInfoDomain dealerInfoDomain);
+        Task<IEnumerable<DealerDomain>> GetDealersAsync();
+        Task<DealerDomain> GetDealerByIdAsync(int id);
+        Task<DealerCreateDomain> CreateDealerAsync(DealerCreateDomain dealerCreateDomain);
+        Task<DealerDomain> UpdateDealerAsync(int id, DealerDomain dealerDomain);
+        Task<DealerDomain> DeleteDealerAsync(int id);
+        Task<DealerInfoDomain> ChangeDealerInfoAsync(int id, DealerInfoDomain dealerInfoDomain);
     }
 }

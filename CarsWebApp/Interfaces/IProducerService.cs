@@ -7,12 +7,12 @@ namespace CarsWebApp.Interfaces
 {
     public interface IProducerService
     {
-        Task<IEnumerable<ProducerDomain>> GetProducers();
-        Task<ProducerDomain> GetProducerById(int id);
-        Task<ProducerCreateDomain> CreateProducer(ProducerCreateDomain producerCreateDomain);
-        Task<ProducerDomain> UpdateProducer(int id, ProducerDomain producerDomain);
-        Task<ProducerDomain> DeleteProducer(int id);
-        Task<ProducerInfoDomain> ChangeProducerInfo(int id, ProducerInfoDomain producerInfoDomain);
+        Task<IEnumerable<ProducerDomain>> GetProducersAsync();
+        Task<ProducerDomain> GetProducerByIdAsync(int id);
+        Task<ProducerCreateDomain> CreateProducerAsync(ProducerCreateDomain producerCreateDomain);
+        Task<ProducerDomain> UpdateProducerAsync(int id, ProducerDomain producerDomain);
+        Task<ProducerDomain> DeleteProducerAsync(int id);
+        Task<ProducerInfoDomain> ChangeProducerInfoAsync(int id, ProducerInfoDomain producerInfoDomain);
 
     }
 }

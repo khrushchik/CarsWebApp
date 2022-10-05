@@ -6,8 +6,8 @@ namespace CarsWebApp.Interfaces
 {
     public interface IUserRepository
     {
-        public Task<User> Create(User user);
-        public Task<IEnumerable<User>> GetUsers();
+        public Task<User> CreateAsync(User user);
+        public Task<IEnumerable<User>> GetUsersAsync();
         public Task<User> GetUserByEmailAsync(string email);
         public Task<User> GetUserByIdAsync(int id);
     }

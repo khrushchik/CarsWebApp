@@ -3,6 +3,7 @@ using CarsWebApp.Domains;
 using CarsWebApp.DTOs;
 using CarsWebApp.Helpers;
 using CarsWebApp.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace CarsWebApp.Controllers
             _mapper = mapper;
             _securityHelper = securityHelper;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetUserDTO>>> GetUsersAsync()
         {
@@ -64,6 +66,12 @@ namespace CarsWebApp.Controllers
         public async Task<ActionResult<UserCreateDTO>> GetUserByIdAsync(int id)
         {
             return _mapper.Map<UserCreateDTO>(await _userService.GetUserByIdAsync(id));
+        }
+
+        [HttpGet("getMe"), Authorize]
+        public ActionResult<string> GetUserName()
+        {
+            return Ok(_userService.GetName());
         }
     }
 }

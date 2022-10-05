@@ -6,7 +6,9 @@ using CarsWebApp.Models;
 using CarsWebApp.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-//using ProducerEntity = CarsWebApp.Models.Producer;
+using ProducerInfo = CarsWebApp.Domains.ProducerInfoDomain;
+using ProducerCreate = CarsWebApp.Domains.ProducerCreateDomain;
+
 namespace CarsWebApp.Service
 {
     public class ProducerService : IProducerService
@@ -18,37 +20,37 @@ namespace CarsWebApp.Service
             _mapper = mapper;
             _producerRepository = producerRepository;
         }
-        public async Task<ProducerInfoDomain> ChangeProducerInfo(int id, ProducerInfoDomain producerInfoDomain)
+        public async Task<ProducerInfo> ChangeProducerInfoAsync(int id, ProducerInfo producerInfoDomain)
         {
             var producer = _mapper.Map<Producer>(producerInfoDomain);
-            return _mapper.Map<ProducerInfoDomain>(await _producerRepository.ChangeInfo(id, producer));
+            return _mapper.Map<ProducerInfo>(await _producerRepository.ChangeInfoAsync(id, producer));
         }
 
-        public async Task<ProducerCreateDomain> CreateProducer(ProducerCreateDomain producerCreateDomain)
+        public async Task<ProducerCreate> CreateProducerAsync(ProducerCreate producerCreateDomain)
         {
             var producer = _mapper.Map<Producer>(producerCreateDomain);
-            return _mapper.Map<ProducerCreateDomain>(await _producerRepository.Create(producer));
+            return _mapper.Map<ProducerCreate>(await _producerRepository.CreateAsync(producer));
         }
 
-        public async Task<ProducerDomain> DeleteProducer(int id)
+        public async Task<ProducerDomain> DeleteProducerAsync(int id)
         {
-            return _mapper.Map<ProducerDomain>(await _producerRepository.Delete(id));
+            return _mapper.Map<ProducerDomain>(await _producerRepository.DeleteAsync(id));
         }
 
-        public async Task<ProducerDomain> GetProducerById(int id)
+        public async Task<ProducerDomain> GetProducerByIdAsync(int id)
         {
-            return _mapper.Map<ProducerDomain>(await _producerRepository.Get(id));
+            return _mapper.Map<ProducerDomain>(await _producerRepository.GetAsync(id));
         }
 
-        public async Task<IEnumerable<ProducerDomain>> GetProducers()
+        public async Task<IEnumerable<ProducerDomain>> GetProducersAsync()
         {
             return _mapper.Map<IEnumerable<ProducerDomain>>(await _producerRepository.GetAll());
         }
 
-        public async Task<ProducerDomain> UpdateProducer(int id, ProducerDomain producerDomain)
+        public async Task<ProducerDomain> UpdateProducerAsync(int id, ProducerDomain producerDomain)
         {
             var producer = _mapper.Map<Producer>(producerDomain);
-            return _mapper.Map<ProducerDomain>(await _producerRepository.Update(id, producer));
+            return _mapper.Map<ProducerDomain>(await _producerRepository.UpdateAsync(id, producer));
 
         }
     }

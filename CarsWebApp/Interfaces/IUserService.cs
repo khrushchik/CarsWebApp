@@ -10,6 +10,7 @@ namespace CarsWebApp.Interfaces
         Task<UserCreateDomain> CreateUserAsync(UserCreateDomain userCreateDomain);
         Task<UserDomain> GetUserByEmailAsync(string email);
         Task<UserDomain> GetUserByIdAsync(int id);
+        string GetName();
 
     }
 }
