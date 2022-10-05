@@ -11,11 +11,13 @@ using CarsWebApp.DTOs;
 using CarsWebApp.Interfaces;
 using AutoMapper;
 using CarsWebApp.Domains;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarsWebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProducersController : ControllerBase
     {
         private readonly IProducerService _producerService;
