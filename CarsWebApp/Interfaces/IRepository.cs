@@ -6,11 +6,11 @@ namespace CarsWebApp.Interfaces
     public interface IRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAll();
-        Task<T> Get(int id);
-        Task<T> Create(T item);
-        Task<T> Update(int id, T item);
-        Task<T> Delete(int id);
-        Task<T> ChangeInfo(int id, T item);
+        Task<T> GetAsync(int id);
+        Task<T> CreateAsync(T item);
+        Task<T> UpdateAsync(int id, T item);
+        Task<T> DeleteAsync(int id);
+        Task<T> ChangeInfoAsync(int id, T item);
 
 
     }

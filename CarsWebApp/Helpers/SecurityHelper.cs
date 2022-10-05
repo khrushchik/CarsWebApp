@@ -17,6 +17,7 @@ namespace CarsWebApp.Helpers
         {
             _configuration = configuration;
         }
+
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
@@ -39,6 +40,7 @@ namespace CarsWebApp.Helpers
         {
             List<Claim> claims = new List<Claim>
             {
+                new Claim(ClaimTypes.Name, user.Email),
                 new Claim(ClaimTypes.Email, user.Email)
             };
 

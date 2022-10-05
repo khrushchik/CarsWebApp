@@ -6,11 +6,11 @@ namespace CarsWebApp.Interfaces
 {
     public interface ICarService
     {
-        Task<IEnumerable<CarDomain>> GetCars();
-        Task<CarDomain> GetCarById(int id);
-        Task<CarCreateDomain> CreateCar(CarCreateDomain carCreateDomain);
-        Task<CarDomain> UpdateCar(int id, CarDomain carDomain);
-        Task<CarDomain> DeleteCar(int id);
-        Task<CarInfoDomain> ChangeCarInfo(int id, CarInfoDomain carrInfoDomain);
+        Task<IEnumerable<CarDomain>> GetCarsAsync();
+        Task<CarDomain> GetCarByIdAsync(int id);
+        Task<CarCreateDomain> CreateCarAsync(CarCreateDomain carCreateDomain);
+        Task<CarDomain> UpdateCarAsync(int id, CarDomain carDomain);
+        Task<CarDomain> DeleteCarAsync(int id);
+        Task<CarInfoDomain> ChangeCarInfoAsync(int id, CarInfoDomain carrInfoDomain);
     }
 }

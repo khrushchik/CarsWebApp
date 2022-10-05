@@ -26,23 +26,23 @@ namespace CarsWebApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DealerDTO>>> GetDealersAsync()
         {
-            var dealers = await _dealerService.GetDealers();
+            var dealers = await _dealerService.GetDealersAsync();
             return Ok(_mapper.Map<IEnumerable<DealerDTO>>(dealers));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<DealerDTO>> GetDealerByIdAsync(int id)
         {
-            var dealer = await _dealerService.GetDealerById(id);
+            var dealer = await _dealerService.GetDealerByIdAsync(id);
             if (dealer is null)
                 return NotFound();
             return Ok(_mapper.Map<DealerDTO>(dealer));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDealer(int id)
+        public async Task<IActionResult> DeleteDealerAsync(int id)
         {
-            await _dealerService.DeleteDealer(id);
+            await _dealerService.DeleteDealerAsync(id);
             return NoContent();
         }
 
@@ -50,20 +50,22 @@ namespace CarsWebApp.Controllers
         public async Task<ActionResult<DealerDTO>> CreateDealerAsync([FromBody] DealerCreateDTO dto)
         {
             var dealer = _mapper.Map<DealerCreateDomain>(dto);
-            return Ok(_mapper.Map<DealerCreateDTO>(await _dealerService.CreateDealer(dealer)));
+            return Ok(_mapper.Map<DealerCreateDTO>(await _dealerService.CreateDealerAsync(dealer)));
         }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<DealerDTO>> UpdateDealerAsync(int id, [FromBody] DealerDTO dto)
         {
             var dealer = _mapper.Map<DealerDomain>(dto);
-            return Ok(_mapper.Map<DealerDTO>(await _dealerService.UpdateDealer(id, dealer)));
+            return Ok(_mapper.Map<DealerDTO>(await _dealerService.UpdateDealerAsync(id, dealer)));
 
         }
+
         [HttpPatch("{id}")]
         public async Task<ActionResult<DealerInfoDTO>> ChangeDealerInfoAsync(int id, [FromBody] DealerInfoDTO dto)
         {
             var dealerInfo = _mapper.Map<DealerInfoDomain>(dto);
-            return Ok(_mapper.Map<DealerInfoDTO>(await _dealerService.ChangeDealerInfo(id, dealerInfo)));
+            return Ok(_mapper.Map<DealerInfoDTO>(await _dealerService.ChangeDealerInfoAsync(id, dealerInfo)));
         }
         
     }

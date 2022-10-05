@@ -16,14 +16,14 @@ namespace CarsWebApp.Repositories
             _context = carContext;
             _mapper = mapper;
         }
-        public async Task<User> Create(User user)
+        public async Task<User> CreateAsync(User user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
             return await _context.Users.ToListAsync();
         }

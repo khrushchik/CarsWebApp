@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Http;
 
 namespace CarsWebApp
 {
@@ -53,6 +54,7 @@ namespace CarsWebApp
             services.AddScoped<UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<SecurityHelper>();
+            services.AddHttpContextAccessor();
 
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

@@ -22,17 +22,17 @@ namespace CarsWebApp.Repositories
         {
             return await _context.Producers.Include(p => p.Dealers).ThenInclude(d => d.Cars).ToListAsync();
         }
-        public async Task<Producer> Get(int id)
+        public async Task<Producer> GetAsync(int id)
         {
             return await _context.Producers.Include(d=>d.Dealers).ThenInclude(d=>d.Cars).FirstOrDefaultAsync(i=>i.Id==id);
         }
-        public async Task<Producer> Create(Producer producer)
+        public async Task<Producer> CreateAsync(Producer producer)
         {
             _context.Producers.Add(producer);
             await _context.SaveChangesAsync();
             return producer;
         }
-        public async Task<Producer> Delete(int id)
+        public async Task<Producer> DeleteAsync(int id)
         {
             var producer = await _context.Producers.FindAsync(id);
             IQueryable<Dealer> dealers = from db in _context.Dealers where db.ProducerId == id select db;
@@ -50,7 +50,7 @@ namespace CarsWebApp.Repositories
             await _context.SaveChangesAsync();
             return producer;
         }
-        public async Task<Producer> Update(int id, Producer producer)
+        public async Task<Producer> UpdateAsync(int id, Producer producer)
         {
             if (id != producer.Id)
                 throw new KeyNotFoundException("Producer is`t found");
@@ -58,7 +58,7 @@ namespace CarsWebApp.Repositories
             await _context.SaveChangesAsync();
             return producer;
         }
-        public async Task<Producer> ChangeInfo(int id, Producer producer)
+        public async Task<Producer> ChangeInfoAsync(int id, Producer producer)
         {
             var producerEntity = await _context.Producers.FirstOrDefaultAsync(i => i.Id == id);
             if (producerEntity is null)
