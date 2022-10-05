@@ -7,6 +7,7 @@ namespace CarsWebApp.Models
         public virtual DbSet<Dealer> Dealers { get; set; }
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Producer> Producers { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public CarContext(DbContextOptions<CarContext> options)
             : base(options)
         {

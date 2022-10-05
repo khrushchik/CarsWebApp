@@ -18,6 +18,11 @@ using System.Threading.Tasks;
 using CarsWebApp.Interfaces;
 using CarsWebApp.Repositories;
 using CarsWebApp.Service;
+using CarsWebApp.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace CarsWebApp
 {
@@ -44,12 +49,30 @@ namespace CarsWebApp
             services.AddScoped<CarRepository>();
             services.AddScoped<DealerRepository>();
             services.AddScoped<ProducerRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<SecurityHelper>();
+
+            services.AddAuthentication(
+                JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new ProducerProfile());
                 mc.AddProfile(new CarProfile());
                 mc.AddProfile(new DealerProfile());
+                mc.AddProfile(new UserProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -59,6 +82,14 @@ namespace CarsWebApp
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarsWebApp", Version = "v1" });
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
         }
 
@@ -75,6 +106,8 @@ namespace CarsWebApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
