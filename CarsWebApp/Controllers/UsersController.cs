@@ -48,7 +48,7 @@ namespace CarsWebApp.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync(UserDTO dTO)
+        public async Task<ActionResult<LoginResponse>> LoginAsync(UserDTO dTO)
         {
             var userEntity = await _userService.GetUserByEmailAsync(dTO.Email);
             if(userEntity is null)
@@ -59,7 +59,11 @@ namespace CarsWebApp.Controllers
             {
                 return BadRequest("Wrong password");
             }
-            return Ok(_securityHelper.CreateToken(userEntity));
+            var accessToken = _securityHelper.CreateToken(userEntity);
+            return Ok(new LoginResponse
+            {
+                AccessToken = accessToken
+            });
         }
 
         [HttpGet("{id}")]
