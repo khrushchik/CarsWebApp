@@ -27,7 +27,6 @@ namespace CarsWebAppTests
                 {
                     builder.ConfigureServices(services =>
                     {
-                        //services.RemoveAll<DbContextOptions<CarContext>>();
                         services.RemoveAll(typeof(DbContextOptions<CarContext>));
                         services.AddDbContext<CarContext>(options => { options.UseInMemoryDatabase("TestDb"); });
                     });
