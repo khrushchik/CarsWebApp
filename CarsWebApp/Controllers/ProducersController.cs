@@ -12,6 +12,7 @@ using CarsWebApp.Interfaces;
 using AutoMapper;
 using CarsWebApp.Domains;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace CarsWebApp.Controllers
 {
@@ -22,15 +23,18 @@ namespace CarsWebApp.Controllers
     {
         private readonly IProducerService _producerService;
         private readonly IMapper _mapper;
-        public ProducersController(IProducerService producerService, IMapper mapper)
+        private readonly ILogger _logger;
+        public ProducersController(IProducerService producerService, IMapper mapper, ILogger<ProducersController> logger)
         {
             _producerService = producerService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProducerDTO>>> GetProducersAsync()
         {
+            _logger.LogInformation("ProducerController Get request");
             var producers = await _producerService.GetProducersAsync();
             return Ok( _mapper.Map<IEnumerable<ProducerDTO>>(producers));
         }
@@ -38,6 +42,7 @@ namespace CarsWebApp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProducerDTO>> GetProducerByIdAsync(int id)
         {
+            _logger.LogError("test logger. display error");
             var producer = await _producerService.GetProducerByIdAsync(id);
             if (producer is null)
                 return NotFound();

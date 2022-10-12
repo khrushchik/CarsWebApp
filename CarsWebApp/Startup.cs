@@ -55,6 +55,7 @@ namespace CarsWebApp
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<SecurityHelper>();
             services.AddHttpContextAccessor();
+            services.AddLogging();
 
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
