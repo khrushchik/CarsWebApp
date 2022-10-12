@@ -55,7 +55,7 @@ namespace CarsWebApp.Controllers
         public async Task<ActionResult<ProducerDTO>> CreateProducerAsync([FromBody] ProducerCreateDTO dto)
         {
             var producer = _mapper.Map<ProducerCreateDomain>(dto);
-            return Ok(_mapper.Map<ProducerCreateDTO>(await _producerService.CreateProducerAsync(producer)));
+            return Ok(_mapper.Map<ProducerDTO>(await _producerService.CreateProducerAsync(producer)));
         }
 
         [HttpPut("{id}")]

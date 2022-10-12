@@ -22,8 +22,18 @@ namespace CarsWebApp.MappingProfiles
             CreateMap<ProducerInfoDomain, Producer>().ReverseMap();
 
             CreateMap<ProducerCreateDTO, ProducerCreateDomain>().ReverseMap();
+            
             CreateMap<ProducerCreateDomain, Producer>().ReverseMap();
+            
             CreateMap<ProducerInfoDTO, ProducerInfoDomain>().ReverseMap();
+
+            CreateMap<ProducerCreateDomain, ProducerDTO>().ReverseMap();
+
+            CreateMap<ProducerCreateResponse, Producer>().ReverseMap();
+
+            CreateMap<ProducerCreateResponse, ProducerDTO>().ReverseMap();
+
+            CreateMap<Producer, ProducerDomain>().ReverseMap();
         }
     }
 }

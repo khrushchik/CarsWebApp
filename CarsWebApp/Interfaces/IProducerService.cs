@@ -9,7 +9,7 @@ namespace CarsWebApp.Interfaces
     {
         Task<IEnumerable<ProducerDomain>> GetProducersAsync();
         Task<ProducerDomain> GetProducerByIdAsync(int id);
-        Task<ProducerCreateDomain> CreateProducerAsync(ProducerCreateDomain producerCreateDomain);
+        Task<ProducerCreateResponse> CreateProducerAsync(ProducerCreateDomain producerCreateDomain);
         Task<ProducerDomain> UpdateProducerAsync(int id, ProducerDomain producerDomain);
         Task<ProducerDomain> DeleteProducerAsync(int id);
         Task<ProducerInfoDomain> ChangeProducerInfoAsync(int id, ProducerInfoDomain producerInfoDomain);

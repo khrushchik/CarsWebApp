@@ -26,10 +26,10 @@ namespace CarsWebApp.Service
             return _mapper.Map<ProducerInfo>(await _producerRepository.ChangeInfoAsync(id, producer));
         }
 
-        public async Task<ProducerCreate> CreateProducerAsync(ProducerCreate producerCreateDomain)
+        public async Task<ProducerCreateResponse> CreateProducerAsync(ProducerCreate producerCreateDomain)
         {
             var producer = _mapper.Map<Producer>(producerCreateDomain);
-            return _mapper.Map<ProducerCreate>(await _producerRepository.CreateAsync(producer));
+            return _mapper.Map<ProducerCreateResponse>(await _producerRepository.CreateAsync(producer));
         }
 
         public async Task<ProducerDomain> DeleteProducerAsync(int id)
