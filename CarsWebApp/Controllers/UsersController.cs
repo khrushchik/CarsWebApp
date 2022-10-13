@@ -77,5 +77,10 @@ namespace CarsWebApp.Controllers
         {
             return Ok(_userService.GetName());
         }
+        [HttpGet("getMyRole"), Authorize]
+        public ActionResult<string> GetUserRole()
+        {
+            return Ok(_userService.GetRole());
+        }
     }
 }

@@ -4,6 +4,7 @@ using CarsWebApp.DTOs;
 using CarsWebApp.Interfaces;
 using CarsWebApp.Models;
 using CarsWebApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace CarsWebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="user")]
     public class CarsController : ControllerBase
     {
         private readonly ICarService _carService;
