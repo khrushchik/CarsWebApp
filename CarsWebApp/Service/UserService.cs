@@ -53,5 +53,14 @@ namespace CarsWebApp.Service
             }
             return res;
         }
+        public string GetRole()
+        {
+            var res = string.Empty;
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                res = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+            }
+            return res;
+        }
     }
 }

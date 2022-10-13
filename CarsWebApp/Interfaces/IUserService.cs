@@ -11,6 +11,7 @@ namespace CarsWebApp.Interfaces
         Task<UserDomain> GetUserByEmailAsync(string email);
         Task<UserDomain> GetUserByIdAsync(int id);
         string GetName();
+        string GetRole();
 
     }
 }
