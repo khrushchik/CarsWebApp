@@ -46,11 +46,17 @@ namespace CarsWebApp.Service
             return _mapper.Map<IEnumerable<CarDomain>>(await _carRepository.GetAll());
         }
 
+        public async Task<CarInfo> GetCarInfo(int id)
+        {
+            var car = await GetCarByIdAsync(id);
+
+            return _mapper.Map<CarInfo>(car);
+        }
+
         public async Task<CarDomain> UpdateCarAsync(int id, CarDomain carDomain)
         {
             var car = _mapper.Map<Car>(carDomain);
             return _mapper.Map<CarDomain>(await _carRepository.UpdateAsync(id, car));
-
         }
     }
 }

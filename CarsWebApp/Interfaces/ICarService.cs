@@ -8,6 +8,7 @@ namespace CarsWebApp.Interfaces
     {
         Task<IEnumerable<CarDomain>> GetCarsAsync();
         Task<CarDomain> GetCarByIdAsync(int id);
+        Task<CarInfoDomain> GetCarInfo(int id);
         Task<CarCreateDomain> CreateCarAsync(CarCreateDomain carCreateDomain);
         Task<CarDomain> UpdateCarAsync(int id, CarDomain carDomain);
         Task<CarDomain> DeleteCarAsync(int id);

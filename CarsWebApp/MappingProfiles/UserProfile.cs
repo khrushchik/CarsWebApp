@@ -14,6 +14,8 @@ namespace CarsWebApp.MappingProfiles
             CreateMap<UserDomain, User>().ReverseMap();
             CreateMap<GetUserDTO, UserDomain>().ReverseMap();
             CreateMap<UserCreateDTO, UserDomain>().ReverseMap();
+            CreateMap<UserUserNameDomain, UsernameDTO>().ReverseMap();
+            CreateMap<UserUserNameDomain, User>().ReverseMap();
         }
     }
 }

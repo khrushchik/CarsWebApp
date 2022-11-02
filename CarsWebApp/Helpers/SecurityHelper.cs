@@ -41,7 +41,8 @@ namespace CarsWebApp.Helpers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Sid, user.Id.ToString()),
             };
             List<string> adminEmails = _configuration.GetSection("AppSettings:AdminEmails").Get<List<string>>();
             

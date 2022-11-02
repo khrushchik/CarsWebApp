@@ -35,6 +35,12 @@ namespace CarsWebApp.Service
             return _mapper.Map<IEnumerable<UserDomain>>(await _userRepository.GetUsersAsync());
         }
 
+        public async Task<UserUserNameDomain> ChangeUserNameAsync(int id, UserUserNameDomain usernameDomain)
+        {
+            var user = _mapper.Map<User>(usernameDomain);
+            return _mapper.Map<UserUserNameDomain>(await _userRepository.AddUserNameAsync(id, user));
+        }
+
         public async Task<UserDomain> GetUserByEmailAsync(string email)
         {
             return _mapper.Map<UserDomain>(await _userRepository.GetUserByEmailAsync(email));
