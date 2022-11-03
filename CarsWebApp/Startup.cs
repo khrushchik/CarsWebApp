@@ -46,6 +46,7 @@ namespace CarsWebApp
             services.AddScoped<IRepository<Dealer>, DealerRepository>();
             services.AddScoped<IProducerService, ProducerService>();
             services.AddScoped<ICarService, CarService>();
+            services.AddScoped<GuidEntityRepository>();
             services.AddScoped<IDealerService, DealerService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddScoped<CarRepository>();
