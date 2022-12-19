@@ -4,14 +4,16 @@ using CarsWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarsWebApp.Migrations
 {
     [DbContext(typeof(CarContext))]
-    partial class CarContextModelSnapshot : ModelSnapshot
+    [Migration("20221102085547_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,20 +88,6 @@ namespace CarsWebApp.Migrations
                     b.ToTable("Dealers");
                 });
 
-            modelBuilder.Entity("CarsWebApp.Models.GuidEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GuidEntities");
-                });
-
             modelBuilder.Entity("CarsWebApp.Models.Producer", b =>
                 {
                     b.Property<int>("Id")
@@ -121,39 +109,6 @@ namespace CarsWebApp.Migrations
                     b.ToTable("Producers");
                 });
 
-            modelBuilder.Entity("CarsWebApp.Models.QTable", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("WTableId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WTableId");
-
-                    b.ToTable("QTables");
-                });
-
-            modelBuilder.Entity("CarsWebApp.Models.Qwerty", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Qwerties");
-                });
-
             modelBuilder.Entity("CarsWebApp.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -170,26 +125,9 @@ namespace CarsWebApp.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("CarsWebApp.Models.WTable", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WTables");
                 });
 
             modelBuilder.Entity("CarsWebApp.Models.Car", b =>
@@ -214,17 +152,6 @@ namespace CarsWebApp.Migrations
                     b.Navigation("Producer");
                 });
 
-            modelBuilder.Entity("CarsWebApp.Models.QTable", b =>
-                {
-                    b.HasOne("CarsWebApp.Models.WTable", "WTable")
-                        .WithMany("QTables")
-                        .HasForeignKey("WTableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("WTable");
-                });
-
             modelBuilder.Entity("CarsWebApp.Models.Dealer", b =>
                 {
                     b.Navigation("Cars");
@@ -233,11 +160,6 @@ namespace CarsWebApp.Migrations
             modelBuilder.Entity("CarsWebApp.Models.Producer", b =>
                 {
                     b.Navigation("Dealers");
-                });
-
-            modelBuilder.Entity("CarsWebApp.Models.WTable", b =>
-                {
-                    b.Navigation("QTables");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,5 +10,6 @@ namespace CarsWebApp.Interfaces
         public Task<IEnumerable<User>> GetUsersAsync();
         public Task<User> GetUserByEmailAsync(string email);
         public Task<User> GetUserByIdAsync(int id);
+        public Task<User> AddUserNameAsync(int id, User user);
     }
 }

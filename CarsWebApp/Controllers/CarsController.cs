@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using CarsWebApp.Domains;
 using CarsWebApp.DTOs;
+using CarsWebApp.Extensions;
 using CarsWebApp.Interfaces;
 using CarsWebApp.Models;
 using CarsWebApp.Repositories;
+using CarsWebApp.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,16 +17,18 @@ namespace CarsWebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles ="user")]
+    [Authorize(Roles = "user, admin")]
     public class CarsController : ControllerBase
     {
         private readonly ICarService _carService;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
 
-        public CarsController(ICarService carService, IMapper mapper)
+        public CarsController(ICarService carService, IMapper mapper, INotificationService notificationService)
         {
             _carService = carService;
             _mapper = mapper;
+            _notificationService = notificationService;
         }
 
         [HttpGet]
@@ -69,6 +74,13 @@ namespace CarsWebApp.Controllers
         {
             var carInfo = _mapper.Map<CarInfoDomain>(dto);
             return Ok(_mapper.Map<CarInfoDTO>(await _carService.ChangeCarInfoAsync(id, carInfo)));
+        }
+
+        [HttpGet("sendinfo/{id}")]
+        public async Task<ActionResult> SendMessageAboutCarAsync(int id)
+        {
+            var userId = Int32.Parse(HttpContext.GetUserId());
+            return Ok(await _notificationService.SendInfoAboutCarAsync(userId, id));
         }
     }
 }

@@ -77,10 +77,18 @@ namespace CarsWebApp.Controllers
         {
             return Ok(_userService.GetName());
         }
+
         [HttpGet("getMyRole"), Authorize]
         public ActionResult<string> GetUserRole()
         {
             return Ok(_userService.GetRole());
+        }
+
+        [HttpPatch("{id}/username"), Authorize]
+        public async Task<ActionResult<UsernameDTO>> ChangeUserNameAsync(int id, [FromBody] UsernameDTO usernameDTO)
+        {
+            var username = _mapper.Map<UserUserNameDomain>(usernameDTO);
+            return Ok(_mapper.Map<UsernameDTO>(await _userService.ChangeUserNameAsync(id, username)));
         }
     }
 }

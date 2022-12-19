@@ -41,9 +41,12 @@ namespace CarsWebApp.Helpers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Sid, user.Id.ToString()),
             };
-            if (CheckEmailIsAdmin(user.Email))
+            List<string> adminEmails = _configuration.GetSection("AppSettings:AdminEmails").Get<List<string>>();
+            
+            if (adminEmails.Contains(user.Email))
             {
                 claims.Add(new Claim(ClaimTypes.Role, "admin"));
             }
@@ -51,6 +54,7 @@ namespace CarsWebApp.Helpers
             {
                 claims.Add(new Claim(ClaimTypes.Role, "user"));
             }
+
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.
                 GetBytes(_configuration.GetSection("AppSettings:Token").Value));
             
@@ -64,14 +68,6 @@ namespace CarsWebApp.Helpers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
-        }
-
-        public bool CheckEmailIsAdmin(string userEmail)
-        {
-            //TODO: strore admin`s emails normally
-            List<string> AdminEmails = new List<string> {"qwerty@gmail.com", "asdf@gmail.com", "admin@gmail.com"};
-            return AdminEmails.Contains(userEmail);
-            //return userEmail == _configuration.GetSection("AppSettings:AdminEmail").Value;
         }
     }
 }

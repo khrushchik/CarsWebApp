@@ -32,9 +32,21 @@ namespace CarsWebApp.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(i=>i.Email==email);
         }
+
         public async Task<User> GetUserByIdAsync(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(i => i.Id == id);
+        }
+
+        public async Task<User> AddUserNameAsync(int id, User user)
+        {
+            var userEntity = await _context.Users.FirstOrDefaultAsync(i => i.Id == id);
+            if (userEntity is null)
+                throw new KeyNotFoundException("User isn`t found");
+            userEntity.UserName = user.UserName;
+            _context.Users.Update(userEntity);
+            await _context.SaveChangesAsync();
+            return userEntity;
         }
     }
 }
