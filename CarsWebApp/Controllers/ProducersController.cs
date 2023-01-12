@@ -18,7 +18,7 @@ namespace CarsWebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProducersController : ControllerBase
     {
         private readonly IProducerService _producerService;
