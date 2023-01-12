@@ -23,7 +23,7 @@ namespace CarsWebAppTests.ProducerTests
         private HttpClient _client;
         public ProducerControllerIntegrationTests(CustomWebApplicationFactory factory) 
         {
-            _client = factory.CreateClient();
+            _client = factory.HttpClient;
         }
         protected async Task<ProducerDTO> CreateProducerAsync(ProducerCreateDTO dTO)
         {

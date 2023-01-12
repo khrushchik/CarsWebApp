@@ -19,7 +19,7 @@ namespace CarsWebAppTests.ProducerTests
         private readonly HttpClient _client;
         public DeleteProducerTests(CustomWebApplicationFactory factory)
         {
-            _client = factory.CreateClient();
+            _client = factory.HttpClient;
         }
         protected async Task<ProducerDTO> CreateProducerAsync(ProducerCreateDTO dTO)
         {
@@ -44,6 +44,14 @@ namespace CarsWebAppTests.ProducerTests
 
             //Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        }
+
+        [Fact]
+        public async Task Delete_WhenProducerNotExist_ReturnNotFoundResponse()
+        {
+            var response = await DeleteProducerAsync(324);
+
+            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
         }
 
         protected async Task<HttpResponseMessage> DeleteProducerAsync(int id)

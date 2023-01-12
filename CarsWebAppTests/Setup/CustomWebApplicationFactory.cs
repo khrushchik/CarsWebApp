@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -31,7 +32,7 @@ namespace CarsWebAppTests.Setup
              .WithCleanUp(true)
              .Build();
 
-
+        public HttpClient HttpClient { get; private set; } = default!;
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureTestServices(services =>
@@ -42,7 +43,11 @@ namespace CarsWebAppTests.Setup
             });
         }
 
-        public async Task InitializeAsync() => await _dbContainer.StartAsync();
+        public async Task InitializeAsync()
+        {
+            await _dbContainer.StartAsync();
+            HttpClient = CreateClient();
+        }
 
         public async new Task DisposeAsync() => await _dbContainer.DisposeAsync();
     }

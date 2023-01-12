@@ -48,7 +48,7 @@ namespace CarsWebApp.Controllers
                 return NotFound();
              return Ok( _mapper.Map<ProducerDTO>(producer));
         }
-
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducerAsync(int id)
         {
