@@ -13,7 +13,7 @@ using Xunit;
 
 namespace CarsWebAppTests.Setup
 {
-    public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
+    /*public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
     {
         public HttpClient _client;
 
@@ -27,5 +27,5 @@ namespace CarsWebAppTests.Setup
             var response = await _client.PostAsJsonAsync("http://localhost:31365/api/producers/", dTO);
             return await response.Content.ReadFromJsonAsync<ProducerDTO>();
         }
-    }
+    }*/
 }

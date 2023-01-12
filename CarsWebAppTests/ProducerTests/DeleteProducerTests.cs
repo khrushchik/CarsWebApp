@@ -13,10 +13,18 @@ using Xunit;
 
 namespace CarsWebAppTests.ProducerTests
 {
-    public class DeleteProducerTests: IntegrationTestBase
+    [Collection("Qwerty")]
+    public class DeleteProducerTests
     {
-        public DeleteProducerTests(CustomWebApplicationFactory factory) : base(factory)
+        private readonly HttpClient _client;
+        public DeleteProducerTests(CustomWebApplicationFactory factory)
         {
+            _client = factory.CreateClient();
+        }
+        protected async Task<ProducerDTO> CreateProducerAsync(ProducerCreateDTO dTO)
+        {
+            var response = await _client.PostAsJsonAsync("http://localhost:31365/api/producers/", dTO);
+            return await response.Content.ReadFromJsonAsync<ProducerDTO>();
         }
 
         [Fact]

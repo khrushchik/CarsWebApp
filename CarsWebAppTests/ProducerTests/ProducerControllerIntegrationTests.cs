@@ -17,11 +17,18 @@ using Xunit;
 
 namespace CarsWebAppTests.ProducerTests
 {
-    public class ProducerControllerIntegrationTests : IntegrationTestBase
+    [Collection("Qwerty")]
+    public class ProducerControllerIntegrationTests
     {
-
-        public ProducerControllerIntegrationTests(CustomWebApplicationFactory factory) : base(factory)
+        private HttpClient _client;
+        public ProducerControllerIntegrationTests(CustomWebApplicationFactory factory) 
         {
+            _client = factory.CreateClient();
+        }
+        protected async Task<ProducerDTO> CreateProducerAsync(ProducerCreateDTO dTO)
+        {
+            var response = await _client.PostAsJsonAsync("http://localhost:31365/api/producers/", dTO);
+            return await response.Content.ReadFromJsonAsync<ProducerDTO>();
         }
 
         [Fact]

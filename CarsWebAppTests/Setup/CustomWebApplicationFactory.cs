@@ -20,22 +20,17 @@ namespace CarsWebAppTests.Setup
 {
     public class CustomWebApplicationFactory : WebApplicationFactory<Startup>, IAsyncLifetime
     {
-        private readonly TestcontainerDatabase _dbContainer;
-
-        public CustomWebApplicationFactory()
-        {
-
-            _dbContainer = new TestcontainersBuilder<MsSqlTestcontainer>()
-                .WithDatabase(new MsSqlTestcontainerConfiguration
-                {
+        private readonly TestcontainerDatabase _dbContainer = new TestcontainersBuilder<MsSqlTestcontainer>()
+             .WithDatabase(new MsSqlTestcontainerConfiguration
+             {
                     //Database = "CarWebAppDB",
                     //Username = "sa",
-                    Password = "12345Qwerty!",
-                })
-                .WithImage("mcr.microsoft.com/mssql/server:2019-latest")
-                .WithCleanUp(true)
-                .Build();
-        }
+                 Password = "12345Qwerty!",
+             })
+             .WithImage("mcr.microsoft.com/mssql/server:2019-latest")
+             .WithCleanUp(true)
+             .Build();
+
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
