@@ -8,8 +8,8 @@ using Xunit;
 
 namespace CarsWebAppTests.ProducerTests
 {
-    [CollectionDefinition("Qwerty")]
+    /*[CollectionDefinition("Qwerty")]
     public class SharedTestCollection: ICollectionFixture<CustomWebApplicationFactory>
     {
-    }
+    }*/
 }

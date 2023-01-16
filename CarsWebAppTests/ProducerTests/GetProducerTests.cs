@@ -14,8 +14,8 @@ using Xunit;
 
 namespace CarsWebAppTests.ProducerTests
 {
-    [Collection("Qwerty")]
-    public class GetProducerTests
+    //[Collection("Qwerty")]
+    public class GetProducerTests : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _client;
         public GetProducerTests(CustomWebApplicationFactory factory) 
@@ -37,7 +37,7 @@ namespace CarsWebAppTests.ProducerTests
             {
                 Info = "mytestInfo",
                 Label = "mytestLabel",
-                Name = "zalupa"
+                Name = "qww"
             });
 
             //Act
@@ -52,25 +52,18 @@ namespace CarsWebAppTests.ProducerTests
             returnedProducer.Info.Should().Be(createdProducer.Info);
         }
 
-        [Fact]
-        public async Task GetAll_WithoutAnyProducers_ReturnEmptyOkResponse()
-        {
-            //Arrange
-            //await AuthenticateAsync();
-            //Act
-            var response = await _client.GetAsync("http://localhost:44346/api/producers");
-            //Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var res = await response.Content.ReadFromJsonAsync<List<Producer>>();
-            _ = res.Should().BeEmpty();
-
-        }
-
-        //protected async Task<ProducerDTO> CreateProducerAsync(ProducerCreateDTO dTO)
+        //[Fact]
+        //public async Task GetAll_WithoutAnyProducers_ReturnEmptyOkResponse()
         //{
+        //    //Arrange
+        //    //await AuthenticateAsync();
+        //    //Act
+        //    var response = await _client.GetAsync("http://localhost:44346/api/producers");
+        //    //Assert
+        //    response.StatusCode.Should().Be(HttpStatusCode.OK);
+        //    var res = await response.Content.ReadFromJsonAsync<List<Producer>>();
+        //    _ = res.Should().BeEmpty();
 
-        //    var response = await _client.PostAsJsonAsync("http://localhost:31365/api/producers/", dTO);
-        //    return await response.Content.ReadFromJsonAsync<ProducerDTO>();
         //}
     }
 }

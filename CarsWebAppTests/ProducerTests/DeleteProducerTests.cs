@@ -13,8 +13,8 @@ using Xunit;
 
 namespace CarsWebAppTests.ProducerTests
 {
-    [Collection("Qwerty")]
-    public class DeleteProducerTests
+    //[Collection("Qwerty")]
+    public class DeleteProducerTests : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _client;
         public DeleteProducerTests(CustomWebApplicationFactory factory)

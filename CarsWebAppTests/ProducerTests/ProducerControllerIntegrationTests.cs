@@ -17,8 +17,8 @@ using Xunit;
 
 namespace CarsWebAppTests.ProducerTests
 {
-    [Collection("Qwerty")]
-    public class ProducerControllerIntegrationTests
+    //[Collection("Qwerty")]
+    public class ProducerControllerIntegrationTests: IClassFixture<CustomWebApplicationFactory>
     {
         private HttpClient _client;
         public ProducerControllerIntegrationTests(CustomWebApplicationFactory factory) 
