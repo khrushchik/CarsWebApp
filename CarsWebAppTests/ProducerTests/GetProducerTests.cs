@@ -15,7 +15,7 @@ using Xunit;
 namespace CarsWebAppTests.ProducerTests
 {
     //[Collection("Qwerty")]
-    public class GetProducerTests : IClassFixture<CustomWebApplicationFactory>
+    public class GetProducerTests /*: IClassFixture<CustomWebApplicationFactory>*/
     {
         private readonly HttpClient _client;
         public GetProducerTests(CustomWebApplicationFactory factory) 
