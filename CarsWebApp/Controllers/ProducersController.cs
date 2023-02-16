@@ -77,5 +77,13 @@ namespace CarsWebApp.Controllers
             var producerInfo = _mapper.Map<ProducerInfoDomain>(dto);
             return Ok(_mapper.Map<ProducerInfoDTO>( await _producerService.ChangeProducerInfoAsync(id, producerInfo)));
         }
+
+        [HttpGet("1branch")]
+        public async Task<ActionResult<ProducerInfoDTO>> branch1(int id, [FromBody] ProducerInfoDTO dto)
+        {
+            var producerInfo = _mapper.Map<ProducerInfoDomain>(dto);
+            return Ok(_mapper.Map<ProducerInfoDTO>(await _producerService.ChangeProducerInfoAsync(id, producerInfo)));
+        }
+
     }
 }
