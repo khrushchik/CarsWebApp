@@ -18,7 +18,7 @@ namespace CarsWebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ProducersController : ControllerBase
     {
         private readonly IProducerService _producerService;
@@ -48,7 +48,7 @@ namespace CarsWebApp.Controllers
                 return NotFound();
              return Ok( _mapper.Map<ProducerDTO>(producer));
         }
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducerAsync(int id)
         {
@@ -77,20 +77,5 @@ namespace CarsWebApp.Controllers
             var producerInfo = _mapper.Map<ProducerInfoDomain>(dto);
             return Ok(_mapper.Map<ProducerInfoDTO>( await _producerService.ChangeProducerInfoAsync(id, producerInfo)));
         }
-
-        [HttpGet("1branch")]
-        public async Task<ActionResult<ProducerInfoDTO>> branch1(int id, [FromBody] ProducerInfoDTO dto)
-        {
-            var producerInfo = _mapper.Map<ProducerInfoDomain>(dto);
-            return Ok(_mapper.Map<ProducerInfoDTO>(await _producerService.ChangeProducerInfoAsync(id, producerInfo)));
-        }
-
-        [HttpGet("2branch")]
-        public async Task<ActionResult<ProducerInfoDTO>> branch2(int id, [FromBody] ProducerInfoDTO dto)
-        {
-            var producerInfo = _mapper.Map<ProducerInfoDomain>(dto);
-            return Ok(_mapper.Map<ProducerInfoDTO>(await _producerService.ChangeProducerInfoAsync(id, producerInfo)));
-        }
-
     }
 }
