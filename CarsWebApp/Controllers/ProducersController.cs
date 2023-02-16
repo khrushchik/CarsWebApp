@@ -86,7 +86,7 @@ namespace CarsWebApp.Controllers
         }
 
         [HttpGet("2branch")]
-        public async Task<ActionResult<ProducerInfoDTO>> branch2(int id, [FromBody] ProducerInfoDTO dto)
+        public async Task<ActionResult<ProducerInfoDTO>> blablabla(int id, [FromBody] ProducerInfoDTO dto)
         {
             var producerInfo = _mapper.Map<ProducerInfoDomain>(dto);
             return Ok(_mapper.Map<ProducerInfoDTO>(await _producerService.ChangeProducerInfoAsync(id, producerInfo)));
