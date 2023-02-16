@@ -47,6 +47,7 @@ namespace CarsWebApp
             services.AddScoped<IProducerService, ProducerService>();
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<GuidEntityRepository>();
+            services.AddScoped<WTableRepository>();
             services.AddScoped<IDealerService, DealerService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddScoped<CarRepository>();
@@ -57,7 +58,7 @@ namespace CarsWebApp
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<SecurityHelper>();
             services.AddSingleton<TelegramApiService>();
-            services.AddHostedService(provider => provider.GetService<TelegramApiService>());
+            //services.AddHostedService(provider => provider.GetService<TelegramApiService>());
             services.AddHttpContextAccessor();
             services.AddLogging();
 

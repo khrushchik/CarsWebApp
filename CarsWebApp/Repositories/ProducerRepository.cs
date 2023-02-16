@@ -35,6 +35,12 @@ namespace CarsWebApp.Repositories
         public async Task<Producer> DeleteAsync(int id)
         {
             var producer = await _context.Producers.FindAsync(id);
+            
+            if (producer is null)
+            {
+                throw new KeyNotFoundException();
+            }
+
             IQueryable<Dealer> dealers = from db in _context.Dealers where db.ProducerId == id select db;
             foreach (Dealer dealer in dealers)
             {
